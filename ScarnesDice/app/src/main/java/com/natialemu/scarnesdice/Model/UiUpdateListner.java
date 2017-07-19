@@ -5,6 +5,8 @@ package com.natialemu.scarnesdice.Model;
  */
 
 public interface UiUpdateListner {
-    void updatePlayerUi(int points, String playerName);
+    void updatePlayerUi(String playerName);
     void updateDiceUi(int dice1, int dice2);
+    void updateScoreUi(int score, String tag);
+    void updateTextViewUi(String message);
 }

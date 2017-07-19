@@ -8,5 +8,7 @@ public interface Player {
 
     void setPoints(int points);
     void setName(String name);
+    String getName();
+    int getPoints();
 
 }

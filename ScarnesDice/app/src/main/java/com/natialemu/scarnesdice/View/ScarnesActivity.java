@@ -117,12 +117,10 @@ public class ScarnesActivity extends AppCompatActivity implements UiUpdateListne
     }
 
     public void onRollClick(View view) {
-        //get random rolls
-        //pass the random rolls to rol
+
         dice1 = (int)(Math.random()*6) + 1;
         dice2 = (int)(Math.random()*6) + 1;
         game.roll(dice1,dice2);
-
 
     }
 
@@ -131,6 +129,7 @@ public class ScarnesActivity extends AppCompatActivity implements UiUpdateListne
     }
 
     public void onResetClick(View view) {
+
         game.reset();
 
     }

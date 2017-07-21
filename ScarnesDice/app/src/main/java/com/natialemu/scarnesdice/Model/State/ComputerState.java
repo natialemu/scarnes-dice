@@ -7,6 +7,7 @@ import com.natialemu.scarnesdice.Model.ScarnesGame;
  */
 
 public class ComputerState implements ScarnesGameState {
+
     private ScarnesGame game;
 
     public ScarnesGame getGame() {
@@ -46,98 +47,95 @@ public class ComputerState implements ScarnesGameState {
     private static int playerCurrentScore = 0;
     private static boolean doubles = false;
 
-    public ComputerState(ScarnesGame game){
+    public ComputerState(ScarnesGame game) {
         this.game = game;
     }
+
     @Override
     public void roll(int dice1, int dice2) {
         notifyPlayer("");
         doubles = false;
-        //playerCurrentScore = dice1 + dice2;
-        updateDice(dice1,dice2);
-        if(dice1==1 && dice2 == 1){
+        updateDice(dice1, dice2);
+        if (dice1 == 1 && dice2 == 1) {
+
             playerScore = 0;
             playerCurrentScore = 0;
             updatePlayerInfo();
             game.toPlayersTurn();
 
+        } else if (dice1 == 1 || dice2 == 1) {
 
-
-        } else if (dice1 == 1 || dice2 == 1){
-            //playerScore = 0;
             updateScore();
             playerCurrentScore = 0;
             updatePlayerInfo();
             game.toPlayersTurn();
 
+        } else if (dice1 == dice2) {
 
-
-        } else if(dice1 == dice2) {
             doubles = true;
             notifyPlayer("Computer must roll again");
             playerScore += (dice1 + dice2);
             playerCurrentScore += (dice1 + dice2);
             updateScore();
-        }else{
+
+        } else {
+
             playerScore += (dice1 + dice2);
             playerCurrentScore += (dice1 + dice2);
             updateScore();
+
         }
 
     }
 
     private void notifyPlayer(String s) {
-        game.notificationTextViewUi(s);
-    }
 
+        game.notificationTextViewUi(s);
+
+    }
 
 
     @Override
     public boolean hold(int dice1, int dice2) {
         notifyPlayer("");
-        if(playerCurrentScore != 0 && !doubles){
+        if (playerCurrentScore != 0 && !doubles) {
             updatePlayerInfo();
             playerCurrentScore = 0;
             game.toPlayersTurn();
             return true;
-        }else if(playerCurrentScore == 0){
+        } else if (playerCurrentScore == 0) {
             notifyPlayer("You must Roll first");
             return false;
-        }else if (doubles){
+        } else if (doubles) {
             notifyPlayer("You must Roll since you got a double");
             return false;
         }
-
         return false;
     }
 
     @Override
     public void reset() {
-        updateDice(1,1);
+        updateDice(1, 1);
         playerCurrentScore = 0;
         playerScore = 0;
         updateScore();
         notifyPlayer("");
         game.init();
-
     }
 
     @Override
     public void updateDice(int dice1, int dice2) {
-        game.getUiListner().updateDiceUi(dice1,dice2);
-
+        game.getUiListner().updateDiceUi(dice1, dice2);
     }
 
 
     @Override
     public void updateScore() {
-        game.getUiListner().updateScoreUi(playerScore,"computer");
-
+        game.getUiListner().updateScoreUi(playerScore, "computer");
     }
 
     @Override
     public void updatePlayerInfo() {
         game.getUiListner().updatePlayerUi("Player 1");
-
     }
 }

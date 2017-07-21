@@ -21,35 +21,34 @@ public class PlayerState implements ScarnesGameState {
     private static int playerScore = 0;
     private static int playerCurrentScore = 0;
     private static boolean doubles = false;
-    public PlayerState(ScarnesGame game){
+
+    public PlayerState(ScarnesGame game) {
         this.game = game;
     }
+
     @Override
     public void roll(int dice1, int dice2) {
         doubles = false;
-        updateDice(dice1,dice2);
-        if(dice1==1 && dice2 == 1){
+        updateDice(dice1, dice2);
+        if (dice1 == 1 && dice2 == 1) {
             playerScore = 0;
             playerCurrentScore = 0;
             updatePlayerInfo();
             game.toComputerTurn();
 
-        } else if (dice1 == 1 || dice2 == 1){
-            //playerScore = 0;
+        } else if (dice1 == 1 || dice2 == 1) {
             updateScore();
             playerCurrentScore = 0;
             updatePlayerInfo();
             game.toComputerTurn();
 
-
-
-        } else if(dice1 == dice2) {
+        } else if (dice1 == dice2) {
             doubles = true;
             notifyPlayer("Player must roll again");
             playerScore += (dice1 + dice2);
             playerCurrentScore += (dice1 + dice2);
             updateScore();
-        }else {
+        } else {
             playerScore += (dice1 + dice2);
             playerCurrentScore += (dice1 + dice2);
             updateScore();
@@ -64,51 +63,44 @@ public class PlayerState implements ScarnesGameState {
 
     @Override
     public boolean hold(int dice1, int dice2) {
-        if(playerCurrentScore != 0 && !doubles){
+        if (playerCurrentScore != 0 && !doubles) {
             updatePlayerInfo();
             playerCurrentScore = 0;
             game.toComputerTurn();
             return true;
-        }else if(playerCurrentScore == 0){
+        } else if (playerCurrentScore == 0) {
             notifyPlayer("You must Roll first");
             return false;
-        }else if(doubles){
+        } else if (doubles) {
             notifyPlayer("You must Roll again since you rolled a double");
             return false;
         }
         return false;
-
-
     }
 
     @Override
     public void reset() {
         //TODO: reset does not behave differently for different states
-
-        updateDice(1,1);
+        updateDice(1, 1);
         playerCurrentScore = 0;
         playerScore = 0;
         updateScore();
         notifyPlayer("");
         game.init();
-
     }
 
     @Override
     public void updateDice(int dice1, int dice2) {
-        game.getUiListner().updateDiceUi(dice1,dice2);
-
+        game.getUiListner().updateDiceUi(dice1, dice2);
     }
 
     @Override
     public void updateScore() {
-        game.getUiListner().updateScoreUi(playerScore,"player");
-
+        game.getUiListner().updateScoreUi(playerScore, "player");
     }
 
     @Override
     public void updatePlayerInfo() {
         game.getUiListner().updatePlayerUi("Computer");
-
     }
 }

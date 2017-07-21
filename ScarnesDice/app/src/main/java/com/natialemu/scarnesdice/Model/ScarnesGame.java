@@ -23,15 +23,15 @@ public interface ScarnesGame {
 
     void setGameState(ScarnesGameState state);
 
-    void toPlayersTurn();
+    Void toPlayersTurn();
 
-    void toComputerTurn();
+    Void toComputerTurn();
 
-    void updateDiceUi(int dice1, int dice2);
-    void updateScoreUi();
-    void updatePlayerInfoUi();
+    Void updateDiceUi(int dice1, int dice2);
+    Void updateScoreUi();
+    Void updatePlayerInfoUi();
 
-    void notificationTextViewUi(String s);
+    Void notificationTextViewUi(String s);
 
-    void initUi();
+    Void initUi();
 }

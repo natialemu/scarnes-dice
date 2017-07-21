@@ -10,6 +10,14 @@ public class PlayerState implements ScarnesGameState {
 
     private ScarnesGame game;
 
+    public static int getPlayerScore() {
+        return playerScore;
+    }
+
+    public static int getPlayerCurrentScore() {
+        return playerCurrentScore;
+    }
+
     private static int playerScore = 0;
     private static int playerCurrentScore = 0;
     private static boolean doubles = false;
@@ -20,7 +28,6 @@ public class PlayerState implements ScarnesGameState {
     public void roll(int dice1, int dice2) {
         doubles = false;
         updateDice(dice1,dice2);
-        playerCurrentScore = dice1 + dice2;
         if(dice1==1 && dice2 == 1){
             playerScore = 0;
             playerCurrentScore = 0;
@@ -40,9 +47,11 @@ public class PlayerState implements ScarnesGameState {
             doubles = true;
             notifyPlayer("Player must roll again");
             playerScore += (dice1 + dice2);
+            playerCurrentScore += (dice1 + dice2);
             updateScore();
-        }else{
+        }else {
             playerScore += (dice1 + dice2);
+            playerCurrentScore += (dice1 + dice2);
             updateScore();
         }
 
@@ -54,14 +63,20 @@ public class PlayerState implements ScarnesGameState {
 
 
     @Override
-    public void hold(int dice1, int dice2) {
+    public boolean hold(int dice1, int dice2) {
         if(playerCurrentScore != 0 && !doubles){
             updatePlayerInfo();
             playerCurrentScore = 0;
             game.toComputerTurn();
+            return true;
         }else if(playerCurrentScore == 0){
             notifyPlayer("You must Roll first");
+            return false;
+        }else if(doubles){
+            notifyPlayer("You must Roll again since you rolled a double");
+            return false;
         }
+        return false;
 
 
     }

@@ -53,13 +53,13 @@ public class ComputerState implements ScarnesGameState {
     public void roll(int dice1, int dice2) {
         notifyPlayer("");
         doubles = false;
-        playerCurrentScore = dice1 + dice2;
+        //playerCurrentScore = dice1 + dice2;
         updateDice(dice1,dice2);
         if(dice1==1 && dice2 == 1){
             playerScore = 0;
             playerCurrentScore = 0;
             updatePlayerInfo();
-            game.toComputerTurn();
+            game.toPlayersTurn();
 
 
 
@@ -68,7 +68,7 @@ public class ComputerState implements ScarnesGameState {
             updateScore();
             playerCurrentScore = 0;
             updatePlayerInfo();
-            game.toComputerTurn();
+            game.toPlayersTurn();
 
 
 
@@ -76,9 +76,11 @@ public class ComputerState implements ScarnesGameState {
             doubles = true;
             notifyPlayer("Computer must roll again");
             playerScore += (dice1 + dice2);
+            playerCurrentScore += (dice1 + dice2);
             updateScore();
         }else{
             playerScore += (dice1 + dice2);
+            playerCurrentScore += (dice1 + dice2);
             updateScore();
         }
 
@@ -91,16 +93,22 @@ public class ComputerState implements ScarnesGameState {
 
 
     @Override
-    public void hold(int dice1, int dice2) {
+    public boolean hold(int dice1, int dice2) {
         notifyPlayer("");
         if(playerCurrentScore != 0 && !doubles){
             updatePlayerInfo();
             playerCurrentScore = 0;
             game.toPlayersTurn();
+            return true;
         }else if(playerCurrentScore == 0){
             notifyPlayer("You must Roll first");
+            return false;
+        }else if (doubles){
+            notifyPlayer("You must Roll since you got a double");
+            return false;
         }
 
+        return false;
     }
 
     @Override

@@ -59,47 +59,59 @@ public class ScarnesGameImpl implements ScarnesGame{
     }
 
     @Override
-    public void toPlayersTurn() {
+    public Void toPlayersTurn() {
         setGameState(PLAYER_STATE);
+        return null;
     }
 
     @Override
-    public void toComputerTurn() {
+    public Void toComputerTurn() {
         setGameState(COMPUTER_STATE);
 
+        return null;
+
     }
 
     @Override
-    public void updateDiceUi(int dice1, int dice2) {
+    public Void updateDiceUi(int dice1, int dice2) {
         currentState.updateDice(dice1,dice2);
 
+        return null;
+
     }
 
     @Override
-    public void updateScoreUi() {
+    public Void updateScoreUi() {
         currentState.updateScore();
 
+        return null;
+
     }
 
     @Override
-    public void updatePlayerInfoUi() {
+    public Void updatePlayerInfoUi() {
         currentState.updatePlayerInfo();
 
+        return null;
+
     }
 
     @Override
-    public void notificationTextViewUi(String s) {
+    public Void notificationTextViewUi(String s) {
         uiListner.updateTextViewUi(s);
 
+        return null;
+
     }
 
     @Override
-    public void initUi() {
+    public Void initUi() {
         uiListner.updatePlayerUi("Player");
         uiListner.updateTextViewUi("");
         uiListner.updateDiceUi(1,1);
         uiListner.updateScoreUi(0,"computer");
         uiListner.updateScoreUi(0,"player");
+        return null;
     }
 
 

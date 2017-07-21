@@ -44,15 +44,16 @@ public class ScarnesActivity extends AppCompatActivity implements UiUpdateListne
 
 
     @Override
-    public void updatePlayerUi(String playerName) {
+    public boolean updatePlayerUi(String playerName) {
         TextView turnNotifier = (TextView)findViewById(R.id.turnNotifier);
         String notifierText = playerName + "'s turn";
         turnNotifier.setText(notifierText);
+        return true;
 
     }
 
     @Override
-    public void updateDiceUi(int dice1, int dice2) {
+    public boolean updateDiceUi(int dice1, int dice2) {
         ImageView firstDice = (ImageView) findViewById(R.id.firstDice);
         ImageView secondDice = (ImageView)findViewById(R.id.secondDice);
 
@@ -85,10 +86,12 @@ public class ScarnesActivity extends AppCompatActivity implements UiUpdateListne
             secondDice.setImageResource(R.drawable.dice6);
         }
 
+        return true;
+
     }
 
     @Override
-    public void updateScoreUi(int score, String tag) {
+    public boolean updateScoreUi(int score, String tag) {
         TextView view;
         String currentScore = new Integer(score).toString();
         if(tag.equals("player")){
@@ -99,14 +102,17 @@ public class ScarnesActivity extends AppCompatActivity implements UiUpdateListne
 
         }
         view.setText(currentScore);
+        return true;
 
     }
 
     @Override
-    public void updateTextViewUi(String message) {
+    public boolean updateTextViewUi(String message) {
         TextView view = (TextView)findViewById(R.id.notification);
 
         view.setText(message);
+
+        return true;
 
     }
 

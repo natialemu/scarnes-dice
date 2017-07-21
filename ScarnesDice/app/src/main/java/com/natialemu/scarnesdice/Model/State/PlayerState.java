@@ -10,6 +10,14 @@ public class PlayerState implements ScarnesGameState {
 
     private ScarnesGame game;
 
+    public static int getPlayerScore() {
+        return playerScore;
+    }
+
+    public static int getPlayerCurrentScore() {
+        return playerCurrentScore;
+    }
+
     private static int playerScore = 0;
     private static int playerCurrentScore = 0;
     private static boolean doubles = false;
@@ -20,7 +28,6 @@ public class PlayerState implements ScarnesGameState {
     public void roll(int dice1, int dice2) {
         doubles = false;
         updateDice(dice1,dice2);
-        playerCurrentScore = dice1 + dice2;
         if(dice1==1 && dice2 == 1){
             playerScore = 0;
             playerCurrentScore = 0;
@@ -40,9 +47,11 @@ public class PlayerState implements ScarnesGameState {
             doubles = true;
             notifyPlayer("Player must roll again");
             playerScore += (dice1 + dice2);
+            playerCurrentScore += (dice1 + dice2);
             updateScore();
-        }else{
+        }else {
             playerScore += (dice1 + dice2);
+            playerCurrentScore += (dice1 + dice2);
             updateScore();
         }
 

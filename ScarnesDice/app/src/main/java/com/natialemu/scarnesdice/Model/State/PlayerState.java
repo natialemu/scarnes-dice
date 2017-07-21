@@ -54,14 +54,20 @@ public class PlayerState implements ScarnesGameState {
 
 
     @Override
-    public void hold(int dice1, int dice2) {
+    public boolean hold(int dice1, int dice2) {
         if(playerCurrentScore != 0 && !doubles){
             updatePlayerInfo();
             playerCurrentScore = 0;
             game.toComputerTurn();
+            return true;
         }else if(playerCurrentScore == 0){
             notifyPlayer("You must Roll first");
+            return false;
+        }else if(doubles){
+            notifyPlayer("You must Roll again since you rolled a double");
+            return false;
         }
+        return false;
 
 
     }
